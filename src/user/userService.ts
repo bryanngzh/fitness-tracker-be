@@ -16,6 +16,9 @@ export class UserService {
     const user: User = {
       name: userData.name,
       email: userData.email,
+      gender: userData.gender,
+      height: userData.height,
+      weight: userData.weight,
     };
     return user;
   }
@@ -26,6 +29,9 @@ export class UserService {
     await userRef.set({
       name: user.name,
       email: user.email,
+      gender: user.gender,
+      height: user.height,
+      weight: user.weight,
     });
 
     return user;

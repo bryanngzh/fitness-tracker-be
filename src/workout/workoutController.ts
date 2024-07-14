@@ -2,6 +2,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Post,
   Query,
@@ -25,5 +26,14 @@ export class WorkoutsController extends Controller {
     const workoutService = new WorkoutService();
     this.setStatus(201);
     return workoutService.create(requestBody);
+  }
+
+  @SuccessResponse("204", "No Content")
+  @Delete()
+  public async deleteWorkout(@Query() id: string): Promise<void> {
+    const workoutService = new WorkoutService();
+    await workoutService.delete(id);
+    this.setStatus(204);
+    return;
   }
 }

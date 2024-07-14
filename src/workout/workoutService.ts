@@ -21,6 +21,7 @@ export class WorkoutService {
     workoutSnapshot.docs.forEach((workoutSnapshot: any) => {
       const workoutDoc = workoutSnapshot.data();
       const workout: Workout = {
+        id: workoutSnapshot.id,
         name: workoutDoc.name,
         date: workoutDoc.date,
         duration: workoutDoc.duration,
@@ -62,5 +63,9 @@ export class WorkoutService {
     });
 
     return workout;
+  }
+
+  public async delete(id: string): Promise<void> {
+    await db.collection("workouts").doc(id).delete();
   }
 }

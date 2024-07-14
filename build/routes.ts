@@ -40,6 +40,7 @@ const models: TsoaRoute.Models = {
     "Workout": {
         "dataType": "refObject",
         "properties": {
+            "id": {"dataType":"string"},
             "name": {"dataType":"string","required":true},
             "date": {"dataType":"string","required":true},
             "duration": {"dataType":"string","required":true},
@@ -154,6 +155,31 @@ export function RegisterRoutes(app: Router) {
 
               const promise = controller.createWorkout.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, 201, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/workout',
+            ...(fetchMiddlewares<RequestHandler>(WorkoutsController)),
+            ...(fetchMiddlewares<RequestHandler>(WorkoutsController.prototype.deleteWorkout)),
+
+            function WorkoutsController_deleteWorkout(request: any, response: any, next: any) {
+            const args = {
+                    id: {"in":"query","name":"id","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new WorkoutsController();
+
+
+              const promise = controller.deleteWorkout.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 204, next);
             } catch (err) {
                 return next(err);
             }

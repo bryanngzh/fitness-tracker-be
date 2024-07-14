@@ -5,5 +5,5 @@ export interface Activity {
   reps?: string;
   sets?: string;
   distance?: string;
-  timing: string;
+  timing?: string;
 }

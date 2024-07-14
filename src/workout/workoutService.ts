@@ -2,7 +2,7 @@ import { db } from "../configs/firebase";
 import { Workout } from "./workout";
 
 export class WorkoutService {
-  public async getAll(userEmail: string): Promise<Workout[] | null> {
+  public async getAll(userEmail: string): Promise<any | null> {
     const workoutSnapshot = await db
       .collection("workouts")
       .where("createdBy", "==", userEmail)
@@ -13,6 +13,10 @@ export class WorkoutService {
     }
 
     const workouts: Workout[] = [];
+    const currentDate = new Date();
+    let streak = 0;
+    let distance = 0;
+    let gym = 0;
 
     workoutSnapshot.docs.forEach((workoutSnapshot: any) => {
       const workoutDoc = workoutSnapshot.data();
@@ -23,9 +27,27 @@ export class WorkoutService {
         activities: workoutDoc.activities,
         createdBy: workoutDoc.createdBy,
       };
+      const date = new Date(workout.date);
+      if (date.getMonth() === currentDate.getMonth()) {
+        streak += 1;
+      }
+      workout.activities.map((activity) => {
+        if (activity.type == "Gym") {
+          gym += 1;
+        } else if (activity.type == "Running" && activity.distance) {
+          distance += parseFloat(activity.distance);
+        }
+      });
       workouts.push(workout);
     });
-    return workouts;
+
+    return {
+      sessions: workouts.length,
+      streak,
+      distance,
+      gym,
+      workouts: workouts,
+    };
   }
 
   public async create(workout: Workout): Promise<Workout> {

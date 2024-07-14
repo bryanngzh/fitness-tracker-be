@@ -1,4 +1,4 @@
-import { Activity } from "src/activity/activity";
+import { Activity } from "./activity";
 
 export interface Workout {
   name: string;

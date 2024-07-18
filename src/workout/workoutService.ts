@@ -32,13 +32,17 @@ export class WorkoutService {
       if (date.getMonth() === currentDate.getMonth()) {
         streak += 1;
       }
+      let isGym = false;
       workout.activities.map((activity) => {
-        if (activity.type == "Gym") {
-          gym += 1;
+        if (!isGym && activity.type == "Gym") {
+          isGym = true;
         } else if (activity.type == "Running" && activity.distance) {
-          distance += parseFloat(activity.distance);
+          distance += Number(activity.distance);
         }
       });
+      if (isGym) {
+        gym += 1;
+      }
       workouts.push(workout);
     });
 
